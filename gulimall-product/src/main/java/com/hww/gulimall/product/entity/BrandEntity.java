@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -23,7 +24,7 @@ import javax.validation.constraints.*;
 @Data
 @Builder
 @TableName("pms_brand")
-public class BrandEntity implements Serializable {
+public class BrandEntity  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -56,7 +57,6 @@ public class BrandEntity implements Serializable {
      *
      * @Pattern : 自定义校验规则
      */
-    @NotEmpty(message = "name must not blank")
     //@Pattern(regexp = "/^[a-zA-Z]$/", message = "firstLetter必须为a-z或者A-Z")
     private Integer firstLetter;
     /**

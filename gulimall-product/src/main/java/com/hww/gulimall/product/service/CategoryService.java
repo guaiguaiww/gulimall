@@ -21,5 +21,9 @@ public interface CategoryService extends IService<CategoryEntity> {
     List<CategoryEntity> listWithTree();
 
     void removeByCatIds(List<Long> longs);
+
+    Long[] findCateLogPath(Long catelogId);
+
+    void updateCascade(CategoryEntity category);
 }
 

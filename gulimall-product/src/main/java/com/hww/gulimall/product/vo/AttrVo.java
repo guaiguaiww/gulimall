@@ -1,28 +1,17 @@
-package com.hww.gulimall.product.entity;
-
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
+package com.hww.gulimall.product.vo;
 
 import lombok.Data;
 
 /**
- * 商品属性
- *
- * @author hww
- * @email 2125288145@qq.com
- * @date 2020-04-07 22:28:18
+ * @author heweiwei@hztianque.com
+ * @date 2020/4/23-17:57
+ * @Description:
  */
 @Data
-@TableName("pms_attr")
-public class AttrEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class AttrVo {
     /**
      * 属性id
      */
-    @TableId
     private Long attrId;
     /**
      * 属性名
@@ -57,5 +46,5 @@ public class AttrEntity implements Serializable {
      */
     private Integer showDesc;
 
-
+    private Long attrGroupId;
 }
