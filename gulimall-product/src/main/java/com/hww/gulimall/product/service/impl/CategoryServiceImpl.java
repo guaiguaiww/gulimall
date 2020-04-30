@@ -53,8 +53,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .collect(Collectors.toList());
         return parentCategoryEntities;
     }
-
-
     /**
      * 给一级类别递归设置子分类
      *
