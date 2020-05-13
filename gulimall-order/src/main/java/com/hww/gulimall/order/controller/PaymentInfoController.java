@@ -47,7 +47,6 @@ public class PaymentInfoController {
      * 信息
      */
     @RequestMapping("/info/{id}")
-    //@RequiresPermissions("order:paymentinfo:info")
     public R info(@PathVariable("id") Long id){
 		PaymentInfoEntity paymentInfo = paymentInfoService.getById(id);
 

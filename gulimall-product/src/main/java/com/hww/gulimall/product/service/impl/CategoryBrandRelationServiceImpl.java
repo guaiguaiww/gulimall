@@ -5,9 +5,14 @@ import com.hww.gulimall.product.dao.BrandDao;
 import com.hww.gulimall.product.dao.CategoryDao;
 import com.hww.gulimall.product.entity.BrandEntity;
 import com.hww.gulimall.product.entity.CategoryEntity;
+import com.hww.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,10 +27,17 @@ import com.hww.gulimall.product.service.CategoryBrandRelationService;
 @Service("categoryBrandRelationService")
 public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandRelationDao, CategoryBrandRelationEntity> implements CategoryBrandRelationService {
     @Autowired
-    BrandDao brandDao;
+    private BrandDao brandDao;
 
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
+
+    @Autowired
+    private CategoryBrandRelationDao relationDao;
+
+    @Autowired
+    private BrandService brandService;
+
 
 
     @Override
@@ -64,6 +76,22 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     public void updateCategory(Long catId, String name) {
         this.baseMapper.updateCategory(catId,name);
+    }
+
+    /**
+     * 获取某个分类下所有的品牌
+     * @param catId
+     * @return
+     */
+    @Override
+    public List<BrandEntity> getBrandsByCatId(Long catId) {
+        List<CategoryBrandRelationEntity> catelogId = relationDao.selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+        List<BrandEntity> collect = catelogId.stream().map(item -> {
+            Long brandId = item.getBrandId();
+            BrandEntity byId = brandService.getById(brandId);
+            return byId;
+        }).collect(Collectors.toList());
+        return collect;
     }
 
 }

@@ -53,6 +53,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .collect(Collectors.toList());
         return parentCategoryEntities;
     }
+
     /**
      * 给一级类别递归设置子分类
      *
@@ -91,6 +92,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         this.updateById(category);
         //同步更新关联表中的数据
         categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+    }
+
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPath = findParentPath(catelogId, paths);
+        Collections.reverse(parentPath);
+        return parentPath.toArray(new Long[parentPath.size()]);
+    }
+
+    private List<Long> findParentPath(Long catelogId, List<Long> paths) {
+        //1、收集当前节点id
+        paths.add(catelogId);
+        CategoryEntity byId = this.getById(catelogId);
+        if (byId.getParentCid() != 0) {
+            findParentPath(byId.getParentCid(), paths);
+        }
+        return paths;
     }
 
     private List<Long> findParentPAth(Long catelogId, ArrayList<Long> list) {
